@@ -1,50 +1,154 @@
-# Pressure Players: the most reliable batters and bowlers under pressure in T20 cricket
+<p align="center">
+  <img src="webapp/static/img/rr-logo.png" width="110" alt="Rajasthan Royals logo">
+</p>
 
-**SupeRR Selector Season 2, Round 1.** A data-driven system that rates IPL and full-member T20I players on how they perform in high-pressure moments, compared with their own usual level, and ranks the ten most reliable batters and bowlers.
+<h1 align="center">Pressure Players</h1>
 
-| | |
-|---|---|
-| **Live dashboard** | https://rr-pressure-players.onrender.com |
-| **Methodology report (PDF)** | [`reports/SupeRR_Selector_Season2_Round1_Methodology_Report.pdf`](reports/SupeRR_Selector_Season2_Round1_Methodology_Report.pdf) |
-| **Analysis notebook** | [`Final_v2.ipynb`](Final_v2.ipynb) (full narrated run with outputs) |
+<p align="center">
+  <b>Who delivers when the game is on the line?</b><br>
+  Rating T20 batters and bowlers on how they perform under pressure, compared with their own usual level.<br>
+  <i>SupeRR Selector Season 2 · Round 1</i>
+</p>
+
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.12-254AA5?logo=python&logoColor=white">
+  <img alt="scikit-learn" src="https://img.shields.io/badge/scikit--learn-gradient%20boosting-E91E8C?logo=scikitlearn&logoColor=white">
+  <img alt="Flask" src="https://img.shields.io/badge/Flask-API%20%2B%20dashboard-0B1B4D?logo=flask&logoColor=white">
+  <img alt="Deployed on Render" src="https://img.shields.io/badge/Deployed%20on-Render-254AA5?logo=render&logoColor=white">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-8%20passing-2EA44F">
+</p>
+
+<p align="center">
+  <a href="https://rr-pressure-players.onrender.com"><b>Live dashboard</b></a> ·
+  <a href="reports/SupeRR_Selector_Season2_Round1_Methodology_Report.pdf"><b>Methodology report (PDF)</b></a> ·
+  <a href="Final_v2.ipynb"><b>Analysis notebook</b></a>
+</p>
 
 > The free Render instance sleeps when idle, so the first load of the live link can take about a minute.
 
+---
+
+## Contents
+
+[Highlights](#highlights) · [Final top 10](#final-top-10) · [How it works](#how-it-works) · [Evidence](#evidence) · [Project structure](#project-structure) · [Quick start](#quick-start) · [Deployment](#deployment) · [API](#api) · [Limitations](#limitations)
+
+---
+
+## Highlights
+
+| | | | |
+|:---:|:---:|:---:|:---:|
+| **761**<br>matches (362 IPL, 399 T20Is) | **180,345**<br>deliveries scored | **2.8x**<br>larger swing on pressure balls | **500**<br>bootstrap resamples |
+
+- **Pressure is measured, not guessed:** the expected swing in win probability on the next ball, not fixed rules like "death overs".
+- **Fair to small samples:** Empirical Bayes shrinkage and minimum pressure balls.
+- **Compared with the player's own level:** an elevation score rewards players who step up.
+- **Honest about uncertainty:** every player has a top-10 chance from a match-level bootstrap.
+- **Reproducible:** one scikit-learn model family, fixed seeds, folds grouped by match.
+
 ## Final top 10
 
-| # | Batters | Bowlers |
-|---|---|---|
-| 1 | Tim David | Josh Hazlewood |
-| 2 | Heinrich Klaasen | Akeal Hosein |
-| 3 | Abhishek Sharma | Kuldeep Yadav |
-| 4 | Cameron Green | Jasprit Bumrah |
-| 5 | Daryl Mitchell | Mohammed Siraj |
-| 6 | Yashasvi Jaiswal | Rashid Khan |
-| 7 | Rinku Singh | Varun Chakravarthy |
-| 8 | David Miller | Kagiso Rabada |
-| 9 | Shubman Gill | Trent Boult |
-| 10 | Prabhsimran Singh | Maheesh Theekshana |
+| # | Batters | Top-10 chance | Bowlers | Top-10 chance |
+|:---:|---|:---:|---|:---:|
+| 🥇 | **Tim David** | 88% | **Josh Hazlewood** | 95% |
+| 🥈 | **Heinrich Klaasen** | 78% | **Akeal Hosein** | 75% |
+| 🥉 | **Abhishek Sharma** | 60% | **Kuldeep Yadav** | 66% |
+| 4 | **Cameron Green** | 55% | **Jasprit Bumrah** | 69% |
+| 5 | **Daryl Mitchell** | 43% | **Mohammed Siraj** | 64% |
+| 6 | **Yashasvi Jaiswal** | 50% | **Rashid Khan** | 44% |
+| 7 | **Rinku Singh** | 46% | **Varun Chakravarthy** | 43% |
+| 8 | **David Miller** | 28% | **Kagiso Rabada** | 43% |
+| 9 | **Shubman Gill** | 25% | **Trent Boult** | 35% |
+| 10 | **Prabhsimran Singh** | 23% | **Maheesh Theekshana** | 37% |
 
-The order is a consensus of the baseline score, the bootstrap median rank and the ranks under other eligibility cut-offs. Ranks 1 to 3 in each list are firm; ranks 4 to 10 are close. The full tables, including each player's top-10 chance, are in [`results/`](results/).
+Order is a consensus of the baseline score, the bootstrap median rank and the ranks under other eligibility cut-offs. **Ranks 1 to 3 in each list are firm; ranks 4 to 10 are close.** Full tables are in [`results/`](results/).
 
-## Key numbers
-
-- **761 matches** (362 IPL, 399 full-member T20Is) and **180,345 deliveries**, from January 2022.
-- Pressure balls swing win probability **2.8x** more than ordinary balls (0.031 against 0.011).
-- Out-of-fold win-probability Brier score: **0.132** in chases, **0.227** in the first innings.
-- Split-half reliability (Spearman-Brown): batter strike rate 0.57, batter win probability added 0.41, bowler economy 0.63.
-- **500** match-level bootstrap resamples give every player a top-10 chance.
+<p align="center">
+  <img src="reports/figures/top10_chance.png" alt="How often each top-10 player stays in the top 10 across 500 resamples" width="92%">
+  <br><sub>How often each top-10 player stays in the top 10 across 500 match-level resamples.</sub>
+</p>
 
 ## How it works
 
-1. **Scope.** IPL plus T20Is between the 12 ICC full members, from 2022-01-01. Abandoned matches and super overs are excluded.
-2. **Win probability.** Gradient-boosted models (scikit-learn), one for each innings, calibrated and scored out-of-fold with folds grouped by match.
-3. **Pressure.** The expected swing in win probability on the next ball across dot, run, boundary and wicket outcomes, weighted by phase. The top 20% of balls in each innings are pressure balls.
-4. **Player metrics.** Win probability added, runs above expected (batters), runs saved above expected (bowlers), strike rate or economy, dot balls, and consistency.
-5. **Fair comparison.** Empirical Bayes shrinkage for small samples, elevation against each player's own normal level, and minimum pressure balls (150 for batters, 250 for bowlers).
-6. **Ranking.** A weighted five-part score, then a consensus with bootstrap and eligibility-cut-off ranks. Players eligible in under 70% of resamples cannot be in the top 10, and under 75% cannot be in the top 3.
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#254AA5","primaryTextColor":"#ffffff","primaryBorderColor":"#254AA5","lineColor":"#0B1B4D","secondaryColor":"#E91E8C","tertiaryColor":"#F4F6FC","fontFamily":"Inter, Arial"}}}%%
+flowchart LR
+    A["Ball-by-ball data<br/>IPL + full-member T20Is"] --> B["Game state<br/>score, wickets, balls left"]
+    B --> C["Win probability<br/>calibrated GBM, grouped CV"]
+    C --> D{"Pressure flag<br/>top 20% expected swing"}
+    D --> E["Player metrics<br/>WPA, RAE, RSE"]
+    E --> F["Shrinkage +<br/>eligibility"]
+    F --> G["Weighted<br/>score"]
+    G --> H["500-resample<br/>bootstrap"]
+    H --> I(["Consensus<br/>top 10"])
+    style D fill:#E91E8C,stroke:#E91E8C,color:#ffffff
+```
 
-The full reasoning, tables and limitations are in the [methodology report](reports/SupeRR_Selector_Season2_Round1_Methodology_Report.pdf).
+**1. Scope.** IPL plus T20Is between the 12 ICC full members, from 2022-01-01. Abandoned matches and super overs are excluded.
+
+**2. Win probability.** One gradient-boosted model per innings, calibrated and scored out-of-fold with folds grouped by match (second-innings Brier score **0.132**, first innings **0.227**).
+
+**3. Pressure.** Before every ball, the expected swing in win probability across four outcomes, weighted by how often each happens in that phase. The top 20% of balls in each innings are pressure balls.
+
+$$LI(s)=\sum_{o\in\{\text{dot},\,\text{run},\,\text{boundary},\,\text{wicket}\}} P(o\mid \text{phase})\,\big|WP(s\oplus o)-WP(s)\big|$$
+
+**4. Player metrics.**
+
+| | Batters | Bowlers |
+|---|---|---|
+| Impact on winning | WPA per 100 balls (35%) | WPA per over (25%) |
+| Against the situation | RAE per 100 balls (25%) | Inverse economy (30%) |
+| Elevation (pressure minus normal) | RAE (20%) | RSE per over (15%) |
+| Raw rate | Strike rate (10%) | True dot-ball % (20%) |
+| Consistency | Share of positive innings (10%) | Share of positive spells (10%) |
+
+*WPA = win probability added, RAE = runs above expected, RSE = runs saved above expected. Percentages are the score weights.*
+
+**5. Consensus ranking.**
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#254AA5","primaryTextColor":"#ffffff","primaryBorderColor":"#254AA5","lineColor":"#0B1B4D","secondaryColor":"#E91E8C","tertiaryColor":"#F4F6FC","fontFamily":"Inter, Arial"}}}%%
+flowchart TB
+    A["Baseline score rank"] --> M["Average percentile rank"]
+    B["Bootstrap median rank"] --> M
+    C["Rank under other<br/>eligibility cut-offs"] --> M
+    M --> F{"Eligibility floors"}
+    F -->|"eligible in at least 75% of resamples"| T3["Can take ranks 1 to 3"]
+    F -->|"eligible in at least 70%"| T10["Can take ranks 4 to 10"]
+    F -->|"below 70%"| X["Not in the top 10"]
+    T3 --> OUT(["Final top 10"])
+    T10 --> OUT
+    style F fill:#E91E8C,stroke:#E91E8C,color:#ffffff
+```
+
+## Evidence
+
+**Does the pressure flag separate pressure from ordinary play?**
+
+| Measure | Ordinary balls | Pressure balls |
+|---|:---:|:---:|
+| Average win-probability swing | 0.011 | **0.031** (2.8x) |
+| Share in contests at 25-75% win probability | 62% | **82%** |
+| Share in overs 16 to 20 | 20% | **30%** |
+
+**How repeatable are the ratings?** Split-half reliability (odd against even matches, Spearman-Brown corrected): batter strike rate **0.57**, batter win probability added **0.41**, bowler economy **0.63**. Reliability is moderate, so every player carries a top-10 chance.
+
+<p align="center">
+  <img src="reports/figures/landscape.png" alt="Top 10 players among all eligible players: elevation against runs above or saved against expectation" width="92%">
+  <br><sub>The top 10 (coloured) among all eligible players. Right of the dashed line means better under pressure than in normal play.</sub>
+</p>
+
+<details>
+<summary><b>Robustness checks</b></summary>
+
+- **Weights:** alternative weightings keep 8 to 9 of the baseline batter top 10 and 7 to 9 of the baseline bowler top 10 (rank correlation 0.935 or higher).
+- **Eligibility cut-offs:** re-ranking at other cut-offs keeps 4 to 10 of the baseline top 10, which is why the final order is a consensus.
+- **Bootstrap:** 500 match-level resamples rerun eligibility, shrinkage, scoring and ranking.
+- **Leakage controls:** folds grouped by match with an assertion that no match is in both train and validation; venue par scores leave out the scored match.
+
+</details>
+
+The full write-up is in the [methodology report (PDF)](reports/SupeRR_Selector_Season2_Round1_Methodology_Report.pdf).
 
 ## Project structure
 
@@ -88,7 +192,8 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Run the pipeline
+<details>
+<summary><b>Run the pipeline</b></summary>
 
 The organiser's data files are not included. Place `ball_by_ball.csv`, `matches.csv`, `competitions.csv`, `teams.csv`, `playing_eleven.csv` and `competition_team_player_mapping.csv` in `data/` (see [`data/README.md`](data/README.md)), then:
 
@@ -98,37 +203,47 @@ python run_pipeline.py --data-dir data --out-dir results
 
 A full run takes several minutes (win-probability models and 500 bootstrap resamples). Only scikit-learn gradient boosting is used with fixed seeds, so results are the same on any machine, and rerunning the modular pipeline gives output identical to the notebook.
 
-### Run the tests
+</details>
+
+<details>
+<summary><b>Run the tests, the web app and rebuild the report</b></summary>
 
 ```bash
-python -m pytest -q tests
+python -m pytest -q tests                      # unit and API tests
+gunicorn webapp.wsgi:app -b 127.0.0.1:8000     # then open http://127.0.0.1:8000
+python scripts/build_report.py                 # regenerate the methodology PDF
 ```
 
-### Run the web app locally
-
-```bash
-gunicorn webapp.wsgi:app -b 127.0.0.1:8000
-# open http://127.0.0.1:8000
-```
-
-### Rebuild the report PDF
-
-```bash
-python scripts/build_report.py
-```
+</details>
 
 ## Deployment
 
-The site is a Flask app served by gunicorn. It only reads the files in `results/`, so the deployed service does not need the raw data or the ML libraries.
+The site is a Flask app served by gunicorn. It only reads the files in `results/`, so the deployed service needs neither the raw data nor the ML libraries.
 
-**Live:** https://rr-pressure-players.onrender.com (Render, free plan, Python 3.12).
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#254AA5","primaryTextColor":"#ffffff","primaryBorderColor":"#254AA5","lineColor":"#0B1B4D","secondaryColor":"#E91E8C","tertiaryColor":"#F4F6FC","fontFamily":"Inter, Arial"}}}%%
+flowchart LR
+    D[("Organiser CSVs<br/>data/")] --> P["rr_pressure<br/>pipeline"]
+    P --> R[("results/<br/>CSV + JSON")]
+    R --> W["Flask app<br/>webapp/"]
+    W --> G["gunicorn<br/>on Render"]
+    G --> U["Browser<br/>dashboard + JSON API"]
+    R --> PDF["build_report.py<br/>methodology PDF"]
+    GH["git push to main"] -.->|"auto-deploy"| G
+    style G fill:#E91E8C,stroke:#E91E8C,color:#ffffff
+```
+
+**Live:** [https://rr-pressure-players.onrender.com](https://rr-pressure-players.onrender.com) (Render, free plan, Python 3.12).
 
 ### Deploy your own copy on Render
 
 1. Push this repository to GitHub. The `results/` folder must be committed.
 2. In the [Render dashboard](https://dashboard.render.com) choose **New**, then **Blueprint**, and connect the repository.
 3. Render reads [`render.yaml`](render.yaml) and creates the `rr-pressure-players` web service. Click **Apply**.
-4. Wait for the build (about a minute). Open the service URL, then check `/api/health` returns `{"status":"ok"}`.
+4. Wait for the build (about a minute), open the service URL, and check `/api/health` returns `{"status":"ok"}`.
+
+<details>
+<summary><b>Manual setup, updating and configuration</b></summary>
 
 To create the service by hand instead, choose **New**, then **Web Service**, and use:
 
@@ -142,16 +257,14 @@ To create the service by hand instead, choose **New**, then **Web Service**, and
 
 The [`Procfile`](Procfile) has the same start command for Heroku-style platforms.
 
-### Updating the live site
-
-Rerun the pipeline, commit the new files in `results/`, and push to `main`. Render redeploys automatically.
-
-### Configuration
+**Updating the live site:** rerun the pipeline, commit the new files in `results/`, and push to `main`. Render redeploys automatically.
 
 | Variable | Purpose | Default |
 |---|---|---|
 | `RESULTS_DIR` | Folder the app reads results from | `./results` |
 | `PYTHON_VERSION` | Python version on Render | `3.12.7` |
+
+</details>
 
 ## API
 
@@ -164,6 +277,8 @@ Rerun the pipeline, commit the new files in `results/`, and push to `main`. Rend
 | `GET /api/metrics` | Headline numbers (pressure swing, reliability, counts) |
 | `GET /api/method` | Method steps shown on the site |
 
+Try it: [`/api/rankings/batters?limit=3`](https://rr-pressure-players.onrender.com/api/rankings/batters?limit=3)
+
 ## Limitations
 
 - Opposition strength is not adjusted; all deliveries between full members count equally.
@@ -172,7 +287,6 @@ Rerun the pipeline, commit the new files in `results/`, and push to `main`. Rend
 - Reliability is moderate, so the order within ranks 4 to 10 should be read as close.
 - Some players rest on one competition only and are flagged in the report.
 
-## Notes
+---
 
-- The competition data and the problem statement belong to the SupeRR Selector organisers and are not included.
-- The Rajasthan Royals name and logo belong to their owners and are used here only to present this challenge entry.
+<sub>The competition data and the problem statement belong to the SupeRR Selector organisers and are not included. The Rajasthan Royals name and logo belong to their owners and are used here only to present this challenge entry.</sub>
