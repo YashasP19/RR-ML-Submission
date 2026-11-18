@@ -16,3 +16,7 @@ __pycache__/
 
 # Local reference material (kept on disk, not published)
 reference/
+
+# Local report builder inputs (kept on disk, not published)
+scripts/
+reports/assets/

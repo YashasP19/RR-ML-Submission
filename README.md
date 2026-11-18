@@ -173,12 +173,11 @@ The full write-up is in the [methodology report (PDF)](reports/SupeRR_Selector_S
 │   ├── templates/              #   page templates
 │   └── static/                 #   CSS, JS, logo
 ├── results/                    # pipeline outputs the web app serves
-├── reports/                    # methodology report PDF, figures and builder assets
-├── scripts/build_report.py     # regenerates the PDF from results/
+├── reports/                    # methodology report PDF and its figures
 ├── tests/                      # unit tests for the pipeline helpers and the API
 ├── data/                       # organiser CSVs (not committed, see data/README.md)
 ├── render.yaml, Procfile, requirements-web.txt   # deployment
-└── requirements.txt            # everything needed to run, test and build the report
+└── requirements.txt            # everything needed to run and test the project
 ```
 
 ## Quick start
@@ -206,12 +205,11 @@ A full run takes several minutes (win-probability models and 500 bootstrap resam
 </details>
 
 <details>
-<summary><b>Run the tests, the web app and rebuild the report</b></summary>
+<summary><b>Run the tests and the web app</b></summary>
 
 ```bash
 python -m pytest -q tests                      # unit and API tests
 gunicorn webapp.wsgi:app -b 127.0.0.1:8000     # then open http://127.0.0.1:8000
-python scripts/build_report.py                 # regenerate the methodology PDF
 ```
 
 </details>

@@ -5,10 +5,6 @@ scipy
 scikit-learn
 matplotlib
 seaborn
-# report builder (scripts/build_report.py)
-reportlab
-adjustText
-pillow
 # web app and tests
 -r requirements-web.txt
 pytest
