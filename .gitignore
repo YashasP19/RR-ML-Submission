@@ -13,3 +13,6 @@ __pycache__/
 # Stray outputs if the notebook is run from the repo root
 /top10_*.csv
 /pressure_analysis_v3.png
+
+# Local reference material (kept on disk, not published)
+reference/

@@ -73,7 +73,6 @@ The full reasoning, tables and limitations are in the [methodology report](repor
 ├── scripts/build_report.py     # regenerates the PDF from results/
 ├── tests/                      # unit tests for the pipeline helpers and the API
 ├── data/                       # organiser CSVs (not committed, see data/README.md)
-├── reference/                  # problem statement
 ├── render.yaml, Procfile, requirements-web.txt   # deployment
 └── requirements.txt            # everything needed to run, test and build the report
 ```
@@ -175,5 +174,5 @@ Rerun the pipeline, commit the new files in `results/`, and push to `main`. Rend
 
 ## Notes
 
-- The competition data and problem statement belong to the SupeRR Selector organisers.
+- The competition data and the problem statement belong to the SupeRR Selector organisers and are not included.
 - The Rajasthan Royals name and logo belong to their owners and are used here only to present this challenge entry.
