@@ -1,8 +1,15 @@
-*
-!.gitignore
-!README.md
-!requirements.txt
-!Final_v2.ipynb
-!top10_batters_consensus.csv
-!top10_bowlers_consensus.csv
-!pressure_analysis_v3.png
+# Organiser data stays local
+data/*
+!data/README.md
+
+# Python / OS
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.DS_Store
+.ipynb_checkpoints/
+
+# Stray outputs if the notebook is run from the repo root
+/top10_*.csv
+/pressure_analysis_v3.png

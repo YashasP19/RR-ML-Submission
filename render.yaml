@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: rr-pressure-players
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn webapp.wsgi:app --workers 2 --threads 4 --timeout 60
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7

@@ -1,0 +1,29 @@
+{
+  "matches": 761,
+  "deliveries": 180345,
+  "pressureShare": 0.2,
+  "bootstrapResamples": 500,
+  "winProbBrier": {
+    "innings1": 0.22728005460762296,
+    "innings2": 0.13154445129515202
+  },
+  "swing": {
+    "pressure": 0.0311913763906272,
+    "normal": 0.011238858181442421
+  },
+  "profile": {
+    "deathOvers": [
+      0.1967681502217014,
+      0.30220177646616325
+    ],
+    "closeContest": [
+      0.6245108463714023,
+      0.81960477967769
+    ]
+  },
+  "reliability": {
+    "batterStrikeRate": 0.5738905401730879,
+    "batterWpa": 0.41325348968222503,
+    "bowlerEconomy": 0.6346914114364995
+  }
+}

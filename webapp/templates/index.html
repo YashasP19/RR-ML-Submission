@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block body %}
+<nav class="top">
+  <div class="in">
+    <a class="brand" href="#top"><span class="mark">RR</span> Pressure Players</a>
+    <div class="links">
+      <a href="#rankings">Top 10</a><a href="#players">All players</a><a href="#method">Method</a><a href="#evidence">Evidence</a><a href="#unique">Why us</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="in hero-grid">
+    <div>
+      <p class="kicker">SupeRR Selector Season 2 · Round 1</p>
+      <h1>Who delivers when the game is on the line?</h1>
+      <p class="lead">Every batter and bowler in the IPL and full-member T20Is since 2022, rated on how they perform in the highest-pressure moments compared with their own usual level.</p>
+      <div class="cta">
+        <a class="btn" href="#rankings">See the top 10</a>
+        <a class="btn ghost" href="#method">How it works</a>
+      </div>
+    </div>
+    <div class="hero-stats" id="heroStats" aria-live="polite">
+      <div class="stat"><b>–</b><span>matches analysed</span></div>
+      <div class="stat"><b>–</b><span>deliveries scored</span></div>
+      <div class="stat"><b>–</b><span>of balls flagged as pressure</span></div>
+      <div class="stat"><b>–</b><span>bootstrap resamples</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="blk" id="rankings">
+    <div class="in">
+      <h2 class="sec">Top 10 under pressure</h2>
+      <p class="sub">Final order is a consensus of the baseline score, the bootstrap median rank and the ranks under other eligibility cutoffs.</p>
+      <div class="seg" role="tablist" aria-label="Player type">
+        <button role="tab" data-kind="batters" aria-selected="true">Batters</button>
+        <button role="tab" data-kind="bowlers" aria-selected="false">Bowlers</button>
+      </div>
+      <div id="topGrid" class="cards" aria-live="polite"></div>
+      <p class="note" id="topNote"></p>
+    </div>
+  </section>
+
+  <section class="blk" id="players">
+    <div class="in">
+      <h2 class="sec">All eligible players</h2>
+      <p class="sub">Every player who cleared the pressure-ball threshold, with their consensus rank.</p>
+      <div class="tools">
+        <label class="sr-only" for="q">Search players</label>
+        <input id="q" type="search" placeholder="Search a player" autocomplete="off">
+        <label class="sr-only" for="sort">Sort by</label>
+        <select id="sort">
+          <option value="rank">Sort: consensus rank</option>
+          <option value="pressureBalls">Sort: pressure balls</option>
+          <option value="pTop10">Sort: top 10 chance</option>
+          <option value="elevation">Sort: elevation</option>
+        </select>
+      </div>
+      <div class="card tbl"><table id="allTable"></table></div>
+      <p class="note" id="allNote"></p>
+    </div>
+  </section>
+
+  <section class="blk" id="method">
+    <div class="in">
+      <h2 class="sec">The approach in six steps</h2>
+      <ol class="steps" id="steps"></ol>
+    </div>
+  </section>
+
+  <section class="blk" id="evidence">
+    <div class="in">
+      <h2 class="sec">Does the pressure flag work?</h2>
+      <p class="sub">Pressure balls compared with ordinary balls, legal deliveries only.</p>
+      <div class="tiles" id="tiles"></div>
+      <div class="card" style="margin-top:16px">
+        <h3>How repeatable are the ratings?</h3>
+        <p class="note" style="margin:0 0 8px">Odd-numbered matches against even-numbered ones, corrected to full length (Spearman-Brown).</p>
+        <div id="reliab"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="unique">
+    <div class="in">
+      <h2 class="sec">Why this is different</h2>
+      <p class="sub">The machine-learning ideas behind the ratings.</p>
+      <div class="uniq" id="uniqueGrid"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in foot">
+    <div>
+      <h3>Built for the SupeRR Selector challenge</h3>
+      <p>Round 1 submission: data-driven ratings of the most reliable players under pressure in T20 cricket.</p>
+    </div>
+    <div class="logo">
+      <img src="{{ url_for('static', filename='img/rr-logo.png') }}" alt="Rajasthan Royals logo"
+           onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:'Add static/img/rr-logo.png'}))">
+    </div>
+  </div>
+</footer>
+{% endblock %}
