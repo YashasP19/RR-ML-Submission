@@ -226,7 +226,7 @@ flowchart LR
     R --> W["Flask app<br/>webapp/"]
     W --> G["gunicorn<br/>on Render"]
     G --> U["Browser<br/>dashboard + JSON API"]
-    R --> PDF["build_report.py<br/>methodology PDF"]
+    R --> PDF["Methodology<br/>report PDF"]
     GH["git push to main"] -.->|"auto-deploy"| G
     style G fill:#E91E8C,stroke:#E91E8C,color:#ffffff
 ```
